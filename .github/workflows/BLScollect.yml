@@ -23,7 +23,7 @@ jobs: #job allows python script to run and update CSV file from github directory
           
       - name: Run Python Script
         env: 
-          api_key: ${{secrets.API_KEYS}}
+          API_KEYS: ${{secrets.API_KEYS}}
         run: | 
           python BLSCollection.py 
 
