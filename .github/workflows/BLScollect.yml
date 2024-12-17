@@ -15,15 +15,16 @@ jobs:
     steps: 
       - name: Checkout repository
         uses: actions/checkout@v2 
-      - name: run bls py script 
-
+        
       - name: Setup Python environment 
         uses: actions/setup-python@v2 
         with: 
           python-version: '3.x' 
+          
       - name: Install dependencies
         run: |
           pip install -r requirements.txt 
+          
       - name: Run Python Script
         run: | 
           python BLSCollection.py 
