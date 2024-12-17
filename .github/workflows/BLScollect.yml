@@ -2,7 +2,8 @@ name: BlS collection csv
 on:
   schedule: 
     - cron: '31 13 * * 5' #runs code every friday at 8:31 AM eastern time value based on UTC time in cron
-
+  workflow_dispatch:
+  
 jobs: 
   collect-bls-data-csv: 
     runs-on: ubuntu-latest 
