@@ -1,0 +1,38 @@
+name: BlS collection csv 
+on:
+  schedule: 
+    - cron: '31 13 * * 5' #runs code every friday at 8:31 AM eastern time value based on UTC time in cron
+  push: 
+    branches:
+      - main 
+  workflow_dispatch: 
+
+jobs: 
+  collect-bls-data-csv: 
+    runs-on: ubuntu-latest 
+    permissions:
+      contents: write
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@v2 
+      - name: run bls py script 
+
+      - name: Setup Python environment 
+        uses: actions/setup-python@v2 
+        with: 
+          python-version: '3.x' 
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt 
+      - name: Run Python Script
+        run: | 
+          python BLSCollection.py 
+      - name: Commit and push changes 
+        run: | 
+          git config --local user.email "jagamboa0358@gmail.com"
+          git config --local user.name "jgamboaurrego"
+          git add bls_data.csv
+          git commit -a -m "Add changes" 
+          git push 
+        env: 
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
