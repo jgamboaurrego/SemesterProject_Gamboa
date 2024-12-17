@@ -44,6 +44,9 @@ if response.status_code == 200:
             bls_df_l.append([seriesId, year, period, value])
     bls_df_l = pd.DataFrame(bls_df_l, columns = ['seriesId', 'year', 'period', 'value'])
     bls_df_l.to_csv("bls_data.csv", mode='a', header=False, index=False)
+    bls_df_c = pd.read_csv("bls_data.csv")
+    bls_df_c.drop_duplicates(inplace=True)
+    bls_df_c.to_csv("bls_data.csv", index = False)
 else:
     json_data =bls_data_r(series, latest= "false" ,startyear = 2022 , endyear = (year))
     bls_df = []
