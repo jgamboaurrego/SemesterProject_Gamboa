@@ -51,6 +51,7 @@ if response.status_code == 200:
     bls_df_l = pd.DataFrame(bls_df_l, columns = ['seriesId', 'year', 'period', 'value'])
     bls_df_l.to_csv("bls_data.csv", mode='a', header=False, index=False)
     bls_df_c = pd.read_csv("bls_data.csv")
+    print(bls_df_l)
     bls_df_c.drop_duplicates(inplace=True) #removes duplicates if new BLS data isn't available or accidential refreash
     bls_df_c.to_csv("bls_data.csv", index = False) # replaces bls_data.csv with clean results
 else:
