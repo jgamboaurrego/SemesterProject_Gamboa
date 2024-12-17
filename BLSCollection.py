@@ -7,7 +7,8 @@ import os
 today = date.today()
 year = today.year
 
-key = os.getenv("API_KEYS") #API key
+key = os.environ["API_KEYS"]
+print(key)#API key
 url = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
 def bls_data_r (series, latest,**kwargs):
     # series is functional argument to allow a list of seriesID codes to be pulled from BLS
