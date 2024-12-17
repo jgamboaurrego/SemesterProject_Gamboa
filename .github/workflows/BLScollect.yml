@@ -21,13 +21,12 @@ jobs: #job allows python script to run and update CSV file from github directory
         run: |
           pip install -r requirements.txt 
           
-      - name: Run Python Script
+      - name: Run Python Script 
         env: 
-          API_KEYS: ${{secrets.API_KEYS}}
+          API_KEYS: ${{ secrets.API_KEYS }}
         run: | 
-          python BLSCollection.py 
+          python BLSCollection.py  
 
-      
       - name: Commit and push changes #This was created to update the csv file based on the changes from the python script to the main directory of the SemesterProject_Gamboa Repo  
         run: | 
           git config --local user.email "jagamboa0358@gmail.com"
