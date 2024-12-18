@@ -31,7 +31,7 @@ data['BLS Category'] = data['seriesId'].apply(catgroup)
 st.header("BLS TimeSeries Analysis of Pricing Data")
 #box to select category in dashboard
 
-select_seriesname = st.selectbox('Select Series', data['Series Name'].unique())
+select_seriesname = st.sidebar.selectbox('Select Series', data['Series Name'].unique())
 
 f_data = data[data['Series Name'] == select_seriesname]
 
@@ -48,6 +48,6 @@ elif select_seriesname == 'Civilian Labor Force Level (Seas)':
 elif select_seriesname == 'CPI Energy in U.S City Average':
     fig.update_layout( yaxis_title = "Price Energy")
 else:
-    fig.update_layout( yaxis_title = "value") 
+    fig.update_layout( yaxis_title = "value")
 
 st.plotly_chart(fig, use_container_width=True)
