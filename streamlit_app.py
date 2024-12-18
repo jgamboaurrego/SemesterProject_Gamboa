@@ -30,7 +30,7 @@ def catgroup(bls_name):
 
 data['BLS Category'] = data['seriesId'].apply(catgroup)
 
-st.header("BLS TimeSeries Analysis of Pricing Data", divider="blue")
+st.header("BLS Timeseries Analysis of Data", divider="blue")
 
 #header for Sidebar Filters
 st.sidebar.header("Filters for BLS Time Series Line Charts")
@@ -54,8 +54,9 @@ f_data = f_time[f_time['Series Name'] == select_seriesname]
 
 fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname)
 
+#based on selected category yaxis title will dynamically change
 if select_seriesname == "Total NonFarm (Seas)":
-    fig.update_layout(yaxis_title = "All Employess (Thousands)")
+    fig.update_layout(yaxis_title = "All Employees (Thousands)")
 elif select_seriesname == 'Unemployment Rate (Seas)':
     fig.update_layout( yaxis_title = "Percent of rate")
 elif select_seriesname == 'Labor Force Participation Rate':
@@ -68,3 +69,34 @@ else:
     fig.update_layout( yaxis_title = "value")
 
 st.plotly_chart(fig, use_container_width=True)
+
+st.header("BLS Annual Average Analysis", divider="green")
+annual_data = data.groupby(['Series Name', 'year'])['value'].mean().reset_index()
+
+#header for Sidebar Filters
+st.sidebar.header("Filters for BLS Avg Analysis Bar Chart")
+select_seriesname2 = st.sidebar.selectbox('Select Series for Bar Chart',
+                                          annual_data['Series Name'].unique())
+
+fa_data = annual_data[annual_data['Series Name'] == select_seriesname2]
+
+fa_data['year'] = fa_data['year'].astype(str)
+
+figb = px.bar(fa_data, x = 'year', y = 'value',text_auto='.2s' ,color='year' ,title = select_seriesname2)
+
+if select_seriesname == "Total NonFarm (Seas)":
+    figb.update_layout(xaxis_title = "Year" ,yaxis_title = "Annual Average All Employees (Thousands)")
+elif select_seriesname == 'Unemployment Rate (Seas)':
+    figb.update_layout( xaxis_title = "Year",yaxis_title = "Average Percent of rate")
+elif select_seriesname == 'Labor Force Participation Rate':
+    figb.update_layout( xaxis_title = "Year", yaxis_title = "Average Percent of rate")
+elif select_seriesname == 'Civilian Labor Force Level (Seas)':
+    figb.update_layout(xaxis_title = "Year", yaxis_title = "Average Labor Force (Thousands)")
+elif select_seriesname == 'CPI Energy in U.S City Average':
+    figb.update_layout(xaxis_title = "Year" ,yaxis_title = "Average Price Energy")
+else:
+    figb.update_layout( xaxis_title = "Year" ,yaxis_title = "Average value")
+
+figb.update_traces(textfont_size= 12, textangle = 0, textposition='outside', cliponaxis= False)
+
+st.plotly_chart(figb, use_container_width=True)
