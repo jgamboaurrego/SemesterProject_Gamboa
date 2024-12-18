@@ -21,4 +21,4 @@ select_seriesname = st.selectbox('Select Series', data['Series Name'].unique())
 
 f_data = data[data['Series Name'] == select_seriesname]
 
-st.line_chart(data, x='Date', y='Series Name')
+st.line_chart(f_data, x='Date', y='value')
