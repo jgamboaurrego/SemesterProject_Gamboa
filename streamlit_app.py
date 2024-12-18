@@ -31,15 +31,20 @@ data['BLS Category'] = data['seriesId'].apply(catgroup)
 
 st.header("BLS TimeSeries Analysis of Pricing Data")
 #creates time slicer to affect graphics
-earliest_date = data['Date'].min()
-latest_date = data['Date'].max()
-select_time = st.slider('Select Time Period', earliest_date, latest_date, (earliest_date, latest_date))
+e = data['Date'].min()
+l = data['Date'].max()
+#due to pandas converting dates to timestamps to_pydateime() was used to convert it to method streamlit can understand
+earliest_date = e.to_pydatetime()
+latest_date = l.to_pydatetime()
+select_time = st.slider('Select Time Period', min_value=earliest_date, max_value= latest_date, value = (earliest_date, latest_date),
+                        format = "YYYY-MM-DD")
 
 #box to select category in dashboard to affect graphics displayed
 select_seriesname = st.sidebar.selectbox('Select Series', data['Series Name'].unique())
 
-#filter dataframe based on time and category selected for graphics
-f_time = data[(data['Date']>=select_time[0]) & (data['Date']<=select_time[1])]
+#pd.to_datetime was used to convert back selected time from datetime.datetime to timestamp so pandas dataframe could filter
+f_time = data[(data['Date'] >= pd.to_datetime(select_time[0])) & (data['Date'] <= pd.to_datetime(select_time[1]))]
+
 f_data = f_time[f_time['Series Name'] == select_seriesname]
 
 fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname)
