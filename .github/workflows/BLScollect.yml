@@ -27,6 +27,11 @@ jobs:
           API_KEYS: ${{ secrets.API_KEYS }}
         run: | 
           python BLSCollection.py  
+      
+      - name: Run Streamlit Code
+        run: | 
+          python streamlit_app.py
+      
       - name: Commit and push changes  
         run: | 
           git config --local user.email "jagamboa0358@gmail.com"
