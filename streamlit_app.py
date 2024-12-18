@@ -104,3 +104,6 @@ figb.update_xaxes(dtick="Y1", tickformat = "%Y")
 st.plotly_chart(figb, use_container_width=True)
 
 st.write(fa_data)
+
+check = fa_data.dtypes
+st.write(check) 
