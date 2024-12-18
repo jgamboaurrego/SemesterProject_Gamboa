@@ -99,4 +99,7 @@ else:
 
 figb.update_traces(textfont_size= 12, textangle = 0, textposition='outside', cliponaxis= False)
 
+figb.update_xaxes(dtick="Y1",
+                  tickformat = "%Y")
+
 st.plotly_chart(figb, use_container_width=True)
