@@ -11,7 +11,8 @@ data['Period Type'] = data['period'].str.slice(0,1)
 data["Month"] = data["period"].str.slice(1)
 data["Month"] = data["Month"].astype(int)
 seriesID = ["CES0000000001", "LNS14000000","LNS11000000","LNS11300000", "SUUR0000SA0E"]
-seriesName = ["Total NonFarm (Seas)", "Unemployment Rate (Seas)","Civilian Labor Force Level (Seas)","Labor Force Participation Rate", "CPI Energy in U.S City Average"]
+seriesName = ["Total NonFarm (Seas)", "Unemployment Rate (Seas)",
+              "Civilian Labor Force Level (Seas)","Labor Force Participation Rate", "CPI Energy in U.S City Average"]
 
 data["Series Name"] = data['seriesId'].replace(seriesID, seriesName)
 
@@ -30,6 +31,9 @@ def catgroup(bls_name):
 data['BLS Category'] = data['seriesId'].apply(catgroup)
 
 st.header("BLS TimeSeries Analysis of Pricing Data", divider="blue")
+
+#header for Sidebar Filters
+st.sidebar.header("Filters for BLS Time Series Line Charts")
 #creates time slicer to affect graphics
 e = data['Date'].min()
 l = data['Date'].max()
