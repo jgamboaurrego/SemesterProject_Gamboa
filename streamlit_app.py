@@ -155,7 +155,7 @@ pdata_f = pdata[[x_c, y_c]]
 pdata_f = pdata_f.set_axis(['x','y'], axis=1)
 
 #created scatter plot based on selection
-figs = px.scatter(pdata_f, x='x', y='y', color_discrete_sequence= px.colors.qualitative.G10)
+figs = px.scatter(pdata_f, x='x', y='y', color_discrete_sequence= px.colors.qualitative.Set1)
 
 #updated x and y axes name based on selected values
 figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c)
