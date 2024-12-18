@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import datetime
 
 st.title("Business Bureau of Labor Statistic Monthly Data")
 
@@ -32,7 +33,7 @@ st.header("BLS TimeSeries Analysis of Pricing Data")
 #creates time slicer to affect graphics
 earliest_date = data['Date'].min()
 latest_date = data['Date'].max()
-select_time = st.slider('Select Time Period', earliest_date, latest_date)
+select_time = st.slider('Select Time Period', earliest_date, latest_date, (earliest_date, latest_date))
 
 #box to select category in dashboard to affect graphics displayed
 select_seriesname = st.sidebar.selectbox('Select Series', data['Series Name'].unique())
