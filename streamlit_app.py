@@ -37,17 +37,17 @@ f_data = data[data['Series Name'] == select_seriesname]
 
 fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname)
 
-if f_data['Series Name'] == "Total NonFarm (Seas)":
-    fig.update_layout(xaxis = "Date", yaxis = "All Employess (Thousands)")
-elif f_data['Series Name'] == 'Unemployment Rate (Seas)':
-    fig.update_layout(xaxis = "Date", yaxis = "Percent of rate")
-elif f_data['Series Name'] == 'Labor Force Participation Rate':
-    fig.update_layout(xaxis = "Date", yaxis = "Percent of rate")
-elif f_data['Series Name'] == 'Civilian Labor Force Level (Seas)':
-    fig.update_layout(xaxis = "Date", yaxis = "Labor Force (Thousands)")
-elif f_data['Series Name'] == 'CPI Energy in U.S City Average (Seas)':
-    fig.update_layout(xaxis = "Date", yaxis = "Price Energy")
+if select_seriesname == "Total NonFarm (Seas)":
+    fig.update_layout(yaxis_title = "All Employess (Thousands)")
+elif select_seriesname == 'Unemployment Rate (Seas)':
+    fig.update_layout( yaxis_title = "Percent of rate")
+elif select_seriesname == 'Labor Force Participation Rate':
+    fig.update_layout( yaxis_title = "Percent of rate")
+elif select_seriesname == 'Civilian Labor Force Level (Seas)':
+    fig.update_layout(yaxis_title = "Labor Force (Thousands)")
+elif select_seriesname == 'CPI Energy in U.S City Average':
+    fig.update_layout( yaxis_title = "Price Energy")
 else:
-    fig.update_layout(xaxis = "Date", yaxis = "value")
+    fig.update_layout( yaxis_title = "value") 
 
 st.plotly_chart(fig, use_container_width=True)
