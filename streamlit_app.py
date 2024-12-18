@@ -37,13 +37,14 @@ l = data['Date'].max()
 earliest_date = e.to_pydatetime()
 latest_date = l.to_pydatetime()
 select_time = st.slider('Select Time Period', min_value=earliest_date, max_value= latest_date, value = (earliest_date, latest_date),
-                        format = "YYYY-MM-DD")
+                        format = "YYYY-MM")
 
 #box to select category in dashboard to affect graphics displayed
 select_seriesname = st.sidebar.selectbox('Select Series', data['Series Name'].unique())
 
 #pd.to_datetime was used to convert back selected time from datetime.datetime to timestamp so pandas dataframe could filter
-f_time = data[(data['Date'] >= pd.to_datetime(select_time[0])) & (data['Date'] <= pd.to_datetime(select_time[1]))]
+f_time = data[(data['Date'].dt.to_period("M") >= pd.to_datetime(select_time[0]).to_period("M"))
+              & (data['Date'].dt.to_period("M") <= pd.to_datetime(select_time[1]).to_period("M"))]
 
 f_data = f_time[f_time['Series Name'] == select_seriesname]
 
