@@ -19,7 +19,7 @@ data["Series Name"] = data['seriesId'].replace(seriesID, seriesName)
 data["Date"] = pd.to_datetime({'year': data['year'], 'month': data['Month'], 'day': 1})
 
 data = data.sort_values('Date')
-
+#created function to group values in seriesID together if they cover similar topics like employment and price
 def catgroup(bls_name):
     if bls_name in ['"CES0000000001"',"LNS14000000","LNS11300000"]:
         return "Employment"
@@ -89,8 +89,11 @@ fa_data = annual_data[annual_data['Series Name'] == select_seriesname2]
 
 fa_data['year'] = fa_data['year'].astype(str)
 
-figb = px.bar(fa_data, x = 'year', y = 'value',text_auto='.2s' ,color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
+fa_data['value'] = fa_data['value'].round(0)
 
+figb = px.bar(fa_data, x = 'year', y = 'value',text ='value' ,color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
+
+#Renames yaxis based on selected series name
 if select_seriesname == "Total NonFarm (Seas)":
     figb.update_layout(xaxis_title = "Year" ,yaxis_title = "Annual Average All Employees (Thousands)")
 elif select_seriesname == 'Unemployment Rate (Seas)':
@@ -104,32 +107,45 @@ elif select_seriesname == 'CPI Energy in U.S City Average':
 else:
     figb.update_layout( xaxis_title = "Year" ,yaxis_title = "Average value")
 
-figb.update_traces(textfont_size= 12, textangle = 0, textposition='outside', cliponaxis= False)
+#postioned data labels outside and font size control, cliponaxis preventing cut off when data label moves beyond axis
+figb.update_traces(textfont_size= 12, textposition='outside', cliponaxis= False)
 
-figb.update_xaxes(dtick="Y1", tickformat = "%Y")
+#This is to prevent weird tick marks from appearing in the x axes for year in the chart,
+# dtick controls results to one year
+figb.update_xaxes(dtick="Y1")
 
 st.plotly_chart(figb, use_container_width=True)
 
+
+
+#Below is the Third section showing scatter plot generator
 st.header("BLS Scatter Plot: Looking for Relationships", divider="red")
 
 
+
+#pivoted data table in order to have series name be column name and its corresponding value in column value below
+#used Date as index for the transformation
 pdata = data.pivot(index='Date', columns='Series Name', values='value')
 
+#Created a list of column names for the section box for x and y
 columns = pdata.columns.tolist()
 
+# allows you in streamlit to select the desired Series for X axis
 x_c = st.selectbox('Select Series x axis', columns)
+# allows you in streamlit to select the desired Series for Y axis
 y_c = st.selectbox('Select Series y axis', columns)
 
+#filtered pdate dataframe by selected x_c and y_c columns
 pdata_f = pdata[[x_c, y_c]]
+#renamed columns based on position this allows you to select the same series for both x and y.
+pdata_f = pdata_f.set_axis(['x','y'], axis=1)
 
-pdata_f =pdata_f.set_axis(['x','y'], axis=1)
-
-pdata_f.rename(columns={x_c: 'x'}, inplace=True)
-pdata_f.rename(columns={y_c: 'y'}, inplace=True)
-
+#created scatter plot based on selection
 figs = px.scatter(pdata_f, x='x', y='y')
 
+#updated x and y axis name based on selected values
 figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c)
 
+#created generation button to create Scatter plot
 if st.button("Create Scatter Plot"):
     st.plotly_chart(figs, use_container_width=True)
