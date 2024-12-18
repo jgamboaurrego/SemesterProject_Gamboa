@@ -56,7 +56,8 @@ select_time = st.sidebar.slider('Select Time Period', min_value=earliest_date, m
 #box to select category in dashboard to affect graphics displayed
 select_seriesname = st.sidebar.selectbox('Select Series', data['Series Name'].unique())
 
-#pd.to_datetime was used to convert back selected time from datetime.datetime to timestamp so pandas dataframe could filter
+#pd.to_datetime was used to convert back selected time from
+# datetime.datetime to timestamp so pandas dataframe could filter
 f_time = data[(data['Date'].dt.to_period("M") >= pd.to_datetime(select_time[0]).to_period("M"))
               & (data['Date'].dt.to_period("M") <= pd.to_datetime(select_time[1]).to_period("M"))]
 
@@ -154,7 +155,7 @@ pdata_f = pdata[[x_c, y_c]]
 pdata_f = pdata_f.set_axis(['x','y'], axis=1)
 
 #created scatter plot based on selection
-figs = px.scatter(pdata_f, x='x', y='y', color_discrete_sequence= px.colors.qualitative.G10_r)
+figs = px.scatter(pdata_f, x='x', y='y', color_discrete_sequence= px.colors.qualitative.Prism)
 
 #updated x and y axes name based on selected values
 figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c)
