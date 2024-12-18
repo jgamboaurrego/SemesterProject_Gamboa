@@ -29,7 +29,7 @@ def catgroup(bls_name):
 
 data['BLS Category'] = data['seriesId'].apply(catgroup)
 
-st.header("BLS TimeSeries Analysis of Pricing Data")
+st.header("BLS TimeSeries Analysis of Pricing Data", divider="blue")
 #creates time slicer to affect graphics
 e = data['Date'].min()
 l = data['Date'].max()
