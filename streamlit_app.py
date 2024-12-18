@@ -31,6 +31,9 @@ def catgroup(bls_name):
 data['BLS Category'] = data['seriesId'].apply(catgroup)
 
 st.header("BLS Timeseries Analysis of Data", divider="blue")
+st.write("The graph below shows a time series of the monthly data provided by BLS for the selected series. "
+         "The sidebar to the right allows you user to select series name and a range of time to look at series results")
+
 
 #header for Sidebar Filters
 st.sidebar.header("Filters for BLS Time Series Line Charts")
@@ -71,6 +74,10 @@ else:
 st.plotly_chart(fig, use_container_width=True)
 
 st.header("BLS Annual Average Analysis", divider="green")
+st.write("This bar charts generated below show the annual average values for the selected BLS series for three years"
+         "to select a series go to the sidebar and in the Select Series "
+         "for Bar Chart drop down select the series to see.")
+
 annual_data = data.groupby(['Series Name', 'year'])['value'].mean().reset_index()
 
 #header for Sidebar Filters
@@ -102,8 +109,3 @@ figb.update_traces(textfont_size= 12, textangle = 0, textposition='outside', cli
 figb.update_xaxes(dtick="Y1", tickformat = "%Y")
 
 st.plotly_chart(figb, use_container_width=True)
-
-st.write(fa_data)
-
-check = fa_data.dtypes
-st.write(check) 
