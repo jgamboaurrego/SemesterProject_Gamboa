@@ -112,19 +112,24 @@ st.plotly_chart(figb, use_container_width=True)
 
 st.header("BLS Scatter Plot: Looking for Relationships", divider="red")
 
+
 pdata = data.pivot(index='Date', columns='Series Name', values='value')
 
 columns = pdata.columns.tolist()
 
-x_c = st.selectbox('Select Series X axis', columns)
-y_c = st.selectbox('Select Series y axis', columns)
+x_c = st.selectbox('Select Series for Bar Chart', columns)
+y_c = st.selectbox('Select Series for Bar Chart', columns)
 
 pdata_f = pdata[[x_c, y_c]]
+
+pdata_f =pdata_f.set_axis(['x','y'], axis=1)
 
 pdata_f.rename(columns={x_c: 'x'}, inplace=True)
 pdata_f.rename(columns={y_c: 'y'}, inplace=True)
 
 figs = px.scatter(pdata_f, x='x', y='y')
+
+figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c)
 
 if st.button("Create Scatter Plot"):
     st.plotly_chart(figs, use_container_width=True)
