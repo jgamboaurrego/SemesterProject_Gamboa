@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 st.title("Business Bureau of Labor Statistic Monthly Data")
 
@@ -21,4 +22,6 @@ select_seriesname = st.selectbox('Select Series', data['Series Name'].unique())
 
 f_data = data[data['Series Name'] == select_seriesname]
 
-st.line_chart(f_data, x='Date', y='value')
+fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname)
+
+st.plotly_chart(fig, use_container_width=True)
