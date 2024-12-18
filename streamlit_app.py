@@ -29,11 +29,17 @@ def catgroup(bls_name):
 data['BLS Category'] = data['seriesId'].apply(catgroup)
 
 st.header("BLS TimeSeries Analysis of Pricing Data")
-#box to select category in dashboard
+#creates time slicer to affect graphics
+earliest_date = data['Date'].min()
+latest_date = data['Date'].max()
+select_time = st.slider('Select Time Period', earliest_date, latest_date)
 
+#box to select category in dashboard to affect graphics displayed
 select_seriesname = st.sidebar.selectbox('Select Series', data['Series Name'].unique())
 
-f_data = data[data['Series Name'] == select_seriesname]
+#filter dataframe based on time and category selected for graphics
+f_time = data[(data['Date']>=select_time[0]) & (data['Date']<=select_time[1])]
+f_data = f_time[f_time['Series Name'] == select_seriesname]
 
 fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname)
 
