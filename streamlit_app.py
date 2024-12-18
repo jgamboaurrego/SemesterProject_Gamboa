@@ -157,8 +157,7 @@ pdata_f = pdata_f.set_axis(['x','y'], axis=1)
 figs = px.scatter(pdata_f, x='x', y='y')
 
 #updated x and y axes name based on selected values
-figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c, trendline ="ols",
-                   color_discrete_sequence= px.colors.qualitative.G10_r)
+figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c, trendline ="ols")
 
 #created generation button to create Scatter plot once it is clicked
 if st.button("Create Scatter Plot"):
