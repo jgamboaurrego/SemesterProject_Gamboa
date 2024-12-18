@@ -55,7 +55,7 @@ f_time = data[(data['Date'].dt.to_period("M") >= pd.to_datetime(select_time[0]).
 
 f_data = f_time[f_time['Series Name'] == select_seriesname]
 
-fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname)
+fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname, markers=True ,color_discrete_sequence= px.colors.qualitative.G10_r)
 
 #based on selected category yaxis title will dynamically change
 if select_seriesname == "Total NonFarm (Seas)":
@@ -89,7 +89,7 @@ fa_data = annual_data[annual_data['Series Name'] == select_seriesname2]
 
 fa_data['year'] = fa_data['year'].astype(str)
 
-figb = px.bar(fa_data, x = 'year', y = 'value',text_auto='.2s' ,color='year' ,title = select_seriesname2)
+figb = px.bar(fa_data, x = 'year', y = 'value',text_auto='.2s' ,color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
 
 if select_seriesname == "Total NonFarm (Seas)":
     figb.update_layout(xaxis_title = "Year" ,yaxis_title = "Annual Average All Employees (Thousands)")
