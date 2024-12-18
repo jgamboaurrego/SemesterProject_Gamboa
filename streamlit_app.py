@@ -121,6 +121,10 @@ st.plotly_chart(figb, use_container_width=True)
 #Below is the Third section showing scatter plot generator
 st.header("BLS Scatter Plot: Looking for Relationships", divider="red")
 
+st.write("This section of the dashbaord allows the user to play around with avaialbe bls data to determine a realationship "
+         "between series values based on scatter plot. The dropdowns below allow user to select "
+         "the x and y axis of scatter plot from available series names. Once those are selected user can click on"
+         "create scatter plot button to generate the plot")
 
 
 #pivoted data table in order to have series name be column name and its corresponding value in column value below
@@ -146,6 +150,6 @@ figs = px.scatter(pdata_f, x='x', y='y')
 #updated x and y axis name based on selected values
 figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c)
 
-#created generation button to create Scatter plot
+#created generation button to create Scatter plot once it is clicked
 if st.button("Create Scatter Plot"):
     st.plotly_chart(figs, use_container_width=True)
