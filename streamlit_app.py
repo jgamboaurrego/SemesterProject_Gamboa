@@ -55,7 +55,7 @@ f_time = data[(data['Date'].dt.to_period("M") >= pd.to_datetime(select_time[0]).
 
 f_data = f_time[f_time['Series Name'] == select_seriesname]
 
-fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname, markers=True ,color_discrete_sequence= px.colors.qualitative.G10_r)
+fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname, markers=True ,color_discrete_sequence= px.colors.qualitative.Prism_r)
 
 #based on selected category yaxis title will dynamically change
 if select_seriesname == "Total NonFarm (Seas)":
