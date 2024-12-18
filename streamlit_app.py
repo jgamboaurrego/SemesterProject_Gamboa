@@ -5,7 +5,7 @@ import datetime
 
 st.title("Business Bureau of Labor Statistic Monthly Data")
 
-data = pd.read_csv('https://raw.githubusercontent.com/jgamboaurrego/SemesterProject_Gamboa/refs/heads/Test/bls_data.csv')
+data = pd.read_csv('https://raw.githubusercontent.com/jgamboaurrego/SemesterProject_Gamboa/refs/heads/main/bls_data.csv')
 
 data['Period Type'] = data['period'].str.slice(0,1)
 data["Month"] = data["period"].str.slice(1)
