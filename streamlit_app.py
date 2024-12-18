@@ -5,6 +5,7 @@ import datetime
 
 st.title("Business Bureau of Labor Statistic Monthly Data")
 
+#This allows the most recent data to always be run by streamlit as its connected directly to the Github repo
 data = pd.read_csv('https://raw.githubusercontent.com/jgamboaurrego/SemesterProject_Gamboa/refs/heads/main/bls_data.csv')
 
 #split period to "Period Type" and Month based on position of value this was
