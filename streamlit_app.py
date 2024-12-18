@@ -16,6 +16,8 @@ data["Series Name"] = data['seriesId'].replace(seriesID, seriesName)
 
 data["Date"] = pd.to_datetime({'year': data['year'], 'month': data['Month'], 'day': 1})
 
+data = data.sort_values('Date')
+
 #box to select category in dashboard
 
 select_seriesname = st.selectbox('Select Series', data['Series Name'].unique())
