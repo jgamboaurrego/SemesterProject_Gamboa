@@ -117,8 +117,8 @@ pdata = data.pivot(index='Date', columns='Series Name', values='value')
 
 columns = pdata.columns.tolist()
 
-x_c = st.selectbox('Select Series for Bar Chart', columns)
-y_c = st.selectbox('Select Series for Bar Chart', columns)
+x_c = st.selectbox('Select Series x axis', columns)
+y_c = st.selectbox('Select Series y axis', columns)
 
 pdata_f = pdata[[x_c, y_c]]
 
