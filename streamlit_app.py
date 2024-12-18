@@ -3,8 +3,6 @@ import pandas as pd
 import plotly.express as px
 import datetime
 
-from networkx.algorithms.bipartite.basic import color
-
 st.title("Business Bureau of Labor Statistic Monthly Data")
 
 data = pd.read_csv('https://raw.githubusercontent.com/jgamboaurrego/SemesterProject_Gamboa/refs/heads/main/bls_data.csv')
