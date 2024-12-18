@@ -36,8 +36,8 @@ l = data['Date'].max()
 #due to pandas converting dates to timestamps to_pydateime() was used to convert it to method streamlit can understand
 earliest_date = e.to_pydatetime()
 latest_date = l.to_pydatetime()
-select_time = st.slider('Select Time Period', min_value=earliest_date, max_value= latest_date, value = (earliest_date, latest_date),
-                        format = "YYYY-MM")
+select_time = st.sidebar.slider('Select Time Period', min_value=earliest_date, max_value= latest_date,
+                                value = (earliest_date, latest_date), format = "YYYY-MM")
 
 #box to select category in dashboard to affect graphics displayed
 select_seriesname = st.sidebar.selectbox('Select Series', data['Series Name'].unique())
