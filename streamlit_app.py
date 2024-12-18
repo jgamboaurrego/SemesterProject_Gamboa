@@ -89,7 +89,7 @@ fa_data = annual_data[annual_data['Series Name'] == select_seriesname2]
 
 fa_data['year'] = fa_data['year'].astype(str)
 
-fa_data['value'] = fa_data['value'].round(0)
+fa_data['value'] = fa_data['value'].round(2)
 
 figb = px.bar(fa_data, x = 'year', y = 'value',text ='value' ,color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
 
