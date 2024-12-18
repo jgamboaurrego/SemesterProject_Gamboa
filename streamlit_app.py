@@ -3,10 +3,14 @@ import pandas as pd
 import plotly.express as px
 import datetime
 
+from networkx.algorithms.bipartite.basic import color
+
 st.title("Business Bureau of Labor Statistic Monthly Data")
 
 data = pd.read_csv('https://raw.githubusercontent.com/jgamboaurrego/SemesterProject_Gamboa/refs/heads/main/bls_data.csv')
 
+#split period to "Period Type" and Month based on position of value this was
+# done to account for changes in the data that my change "M" in M01 from M to lower case m for example.
 data['Period Type'] = data['period'].str.slice(0,1)
 data["Month"] = data["period"].str.slice(1)
 data["Month"] = data["Month"].astype(int)
@@ -16,8 +20,10 @@ seriesName = ["Total NonFarm (Seas)", "Unemployment Rate (Seas)",
 
 data["Series Name"] = data['seriesId'].replace(seriesID, seriesName)
 
+#created Date column based on the year and month column
 data["Date"] = pd.to_datetime({'year': data['year'], 'month': data['Month'], 'day': 1})
 
+#sorted values based on date for the plotly graphs otherwise plotting of data may come with errors
 data = data.sort_values('Date')
 #created function to group values in seriesID together if they cover similar topics like employment and price
 def catgroup(bls_name):
@@ -28,21 +34,24 @@ def catgroup(bls_name):
     else:
         return "Other"
 
+#Created BLS Category column using the created function
 data['BLS Category'] = data['seriesId'].apply(catgroup)
 
 st.header("BLS Timeseries Analysis of Data", divider="blue")
-st.write("The graph below shows a time series of the monthly data provided by BLS for the selected series. "
-         "The sidebar to the right allows you user to select series name and a range of time to look at series results")
+st.write("The graph below shows a time series of the monthly data provided by BLS for selected BLS data series. "
+         "To select a specific BLS data series, go to the left sidebar filter and select the data series by its name. "
+         "The chart's time periods in the x-axis can also be altered by the user from "
+         "the time slider in the left sidebar to examine results between different points in time. ")
 
 
 #header for Sidebar Filters
 st.sidebar.header("Filters for BLS Time Series Line Charts")
-#creates time slicer to affect graphics
 e = data['Date'].min()
 l = data['Date'].max()
 #due to pandas converting dates to timestamps to_pydateime() was used to convert it to method streamlit can understand
 earliest_date = e.to_pydatetime()
 latest_date = l.to_pydatetime()
+#creates time slicer to affect graphics
 select_time = st.sidebar.slider('Select Time Period', min_value=earliest_date, max_value= latest_date,
                                 value = (earliest_date, latest_date), format = "YYYY-MM")
 
@@ -55,7 +64,8 @@ f_time = data[(data['Date'].dt.to_period("M") >= pd.to_datetime(select_time[0]).
 
 f_data = f_time[f_time['Series Name'] == select_seriesname]
 
-fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname, markers=True ,color_discrete_sequence= px.colors.qualitative.Prism)
+fig = px.line(f_data, x = "Date", y = "value", title = select_seriesname, markers=True ,
+              color_discrete_sequence= px.colors.qualitative.Prism)
 
 #based on selected category yaxis title will dynamically change
 if select_seriesname == "Total NonFarm (Seas)":
@@ -71,16 +81,18 @@ elif select_seriesname == 'CPI Energy in U.S City Average':
 else:
     fig.update_layout( yaxis_title = "value")
 
+#used to plot plotly graphs on streamlit.
 st.plotly_chart(fig, use_container_width=True)
 
 st.header("BLS Annual Average Analysis", divider="green")
-st.write("This bar charts generated below show the annual average values for the selected BLS series for three years"
-         "to select a series go to the sidebar and in the Select Series "
-         "for Bar Chart drop down select the series to see.")
+st.write("This bar chart, generated below, shows the annual average values for the selected BLS "
+         "data series for all available years. To select a data series, "
+         "navigate to the left sidebar and select it from the Select Series for Bar Chart drop-down menu.")
 
+#create new data frame that averages values based on series name and year to provide annual average results.
 annual_data = data.groupby(['Series Name', 'year'])['value'].mean().reset_index()
 
-#header for Sidebar Filters
+#header for second sidebar filters
 st.sidebar.header("Filters for BLS Avg Analysis Bar Chart")
 select_seriesname2 = st.sidebar.selectbox('Select Series for Bar Chart',
                                           annual_data['Series Name'].unique())
@@ -89,9 +101,8 @@ fa_data = annual_data[annual_data['Series Name'] == select_seriesname2]
 
 fa_data['year'] = fa_data['year'].astype(str)
 
-fa_data['value'] = fa_data['value'].round(2)
-
-figb = px.bar(fa_data, x = 'year', y = 'value',text ='value' ,color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
+figb = px.bar(fa_data, x = 'year', y = 'value',text_auto= True ,
+              color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
 
 #Renames yaxis based on selected series name
 if select_seriesname == "Total NonFarm (Seas)":
@@ -147,8 +158,9 @@ pdata_f = pdata_f.set_axis(['x','y'], axis=1)
 #created scatter plot based on selection
 figs = px.scatter(pdata_f, x='x', y='y')
 
-#updated x and y axis name based on selected values
-figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c)
+#updated x and y axes name based on selected values
+figs.update_layout(xaxis_title = x_c ,yaxis_title = y_c, trendline ="ols",
+                   color_discrete_sequence= px.colors.qualitative.G10_r)
 
 #created generation button to create Scatter plot once it is clicked
 if st.button("Create Scatter Plot"):

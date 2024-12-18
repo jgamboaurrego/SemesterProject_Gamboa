@@ -77,4 +77,4 @@ else:
             bls_df.append([seriesId, year, period, value])
     bls_df = pd.DataFrame(bls_df, columns = ['seriesId', 'year', 'period', 'value'])
     # creates csv file for bls to be added to Github repo through Github action trigger
-    bls_df.to_csv("bls_data.csv", index=False) 
+    bls_df.to_csv("bls_data.csv", index=False)
