@@ -39,5 +39,3 @@ jobs:
           git add bls_data.csv
           git commit -a -m "Add changes" 
           git push 
-        env: 
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
