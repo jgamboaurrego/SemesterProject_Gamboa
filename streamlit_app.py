@@ -105,15 +105,15 @@ figb = px.bar(fa_data, x = 'year', y = 'value',text_auto= ".2s" ,
               color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
 
 #Renames yaxis based on selected series name
-if select_seriesname == "Total NonFarm (Seas)":
+if select_seriesname2 == "Total NonFarm (Seas)":
     figb.update_layout(xaxis_title = "Year" ,yaxis_title = "Annual Average All Employees (Thousands)")
-elif select_seriesname == 'Unemployment Rate (Seas)':
+elif select_seriesname2 == 'Unemployment Rate (Seas)':
     figb.update_layout( xaxis_title = "Year",yaxis_title = "Average Percent of rate")
-elif select_seriesname == 'Labor Force Participation Rate':
+elif select_seriesname2 == 'Labor Force Participation Rate':
     figb.update_layout( xaxis_title = "Year", yaxis_title = "Average Percent of rate")
-elif select_seriesname == 'Civilian Labor Force Level (Seas)':
+elif select_seriesname2 == 'Civilian Labor Force Level (Seas)':
     figb.update_layout(xaxis_title = "Year", yaxis_title = "Average Labor Force (Thousands)")
-elif select_seriesname == 'CPI Energy in U.S City Average':
+elif select_seriesname2 == 'CPI Energy in U.S City Average':
     figb.update_layout(xaxis_title = "Year" ,yaxis_title = "Average Price Energy")
 else:
     figb.update_layout( xaxis_title = "Year" ,yaxis_title = "Average value")
