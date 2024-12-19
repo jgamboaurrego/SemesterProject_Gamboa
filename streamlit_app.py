@@ -101,7 +101,7 @@ fa_data = annual_data[annual_data['Series Name'] == select_seriesname2]
 
 fa_data['year'] = fa_data['year'].astype(str)
 
-figb = px.bar(fa_data, x = 'year', y = 'value',text_auto= True ,
+figb = px.bar(fa_data, x = 'year', y = 'value',text_auto= ".2s" ,
               color='year' ,title = select_seriesname2, color_discrete_sequence= px.colors.qualitative.G10_r)
 
 #Renames yaxis based on selected series name
